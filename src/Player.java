@@ -5,7 +5,7 @@ public class Player {
     private int hp;
     private final int HP_MAX;
 
-    private double damage, fireRate, finalDamage, finalFireRate;
+    private double baseDamage, baseFireRate, finalDamage, finalFireRate;
 
     private Active active;
     private Trinket trinket;
@@ -14,10 +14,31 @@ public class Player {
 
     public Player(int hp, double damage, double fireRate) {
         this.hp = this.HP_MAX = hp;
-        this.damage = damage;
-        this.fireRate = fireRate;
+        this.baseDamage = damage;
+        this.baseFireRate = fireRate;
         passiveList = new ArrayList<>();
         collectList = new ArrayList<>();
+    }
+
+    public void updateStats() {
+
+        finalDamage = baseDamage;
+        finalFireRate = baseFireRate;
+
+        for (Passive p : passiveList) {
+            finalDamage *= p.getDamageMod();
+            finalFireRate *= p.getFireMod();
+        }
+
+        if (active != null) {
+            finalDamage *= active.getDamageMod();
+            finalFireRate *= active.getFireMod();
+        }
+
+        if (trinket != null) {
+            finalDamage *= trinket.getDamageMod();
+            finalFireRate *= trinket.getFireMod();
+        }
     }
 
     public double getFinalDamage() {
@@ -27,6 +48,5 @@ public class Player {
     public double getFinalFireRate() {
         return finalFireRate;
     }
-
 
 }
