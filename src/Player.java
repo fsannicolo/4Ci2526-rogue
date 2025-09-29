@@ -30,7 +30,7 @@ public class Player {
             finalFireRate *= p.getFireMod();
         }
 
-        if (active != null) {
+        if (active != null && active.isLoaded()) {
             finalDamage *= active.getDamageMod();
             finalFireRate *= active.getFireMod();
         }
