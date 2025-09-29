@@ -29,24 +29,24 @@ public class Player {
 
 
     public void updateStats() {
-        // Resetta i valori finali alle basi
+        // Resetta i valori finali 
         finalDamage = baseDamage;
         finalFireRate = baseFireRate;
 
-        // Applica i modificatori degli oggetti Passive
+       
         for (Passive passive : passiveItems) {
             finalDamage += passive.damageMod;
             finalFireRate += passive.fireMod;
         }
 
-        // Applica i modificatori dell'oggett
-        o Active se è carico
+        
+        
         if (activeItem != null && activeItem.isLoaded()) {
             finalDamage += activeItem.damageMod;
             finalFireRate += activeItem.fireMod;
         }
 
-        // Applica i modificatori dell'oggetto Trinket
+        
         if (trinket != null) {
             finalDamage += trinket.damageMod;
             finalFireRate += trinket.fireMod;
