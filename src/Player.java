@@ -20,6 +20,46 @@ public class Player {
         collectList = new ArrayList<>();
     }
 
+    public void addItem(Item nuovo) {
+
+        if (nuovo instanceof Active) { 
+            this.active = (Active)nuovo;
+        }
+
+        else if (nuovo instanceof Passive passive) {
+            passiveList.add(passive);
+        }
+
+        else {
+            this.trinket = (Trinket)nuovo;
+        }
+    }
+
+    public Trinket dropTrinket() {
+
+        if (this.trinket == null) return null;
+
+        Trinket temp = this.trinket;
+        this.trinket = null;
+        return temp;
+    }
+
+    public boolean checkCollectibles() {
+
+        boolean trovati = false;
+
+        for (int i=collectList.size()-1; i>=0; i--) {
+
+            Collectible c = collectList.get(i);
+            if (c instanceof Trinket) {
+                collectList.remove(i);
+                trovati = true;
+            }
+        } 
+
+        return trovati;
+    }
+
     public void updateStats() {
 
         finalDamage = baseDamage;
@@ -49,4 +89,8 @@ public class Player {
         return finalFireRate;
     }
 
+    public void viewStats() {
+
+        System.out.printf("HP: %d, danno corrente: %.2f, fire rate: %.2f \n", hp, finalDamage, finalFireRate);
+    }
 }
